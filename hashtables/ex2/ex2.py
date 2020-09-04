@@ -10,5 +10,44 @@ def reconstruct_trip(tickets, length):
     YOUR CODE HERE
     """
     # Your code here
+    # set up hash table
+    cache = {}
 
+    # set up array
+    route = [None] * length
+
+    # set up for loop
+    for item in tickets:
+        # cache and source, set to destination 
+        cache[item.source] = item.destination
+
+    # first/final flight has a destination with a `source` of `NONE`
+    flight_plan = cache["NONE"] 
+
+    for i in range(0, length):
+        # add to array, set to flight_plan(current)
+        route[i] = flight_plan
+
+        # set and pass in current to the cache
+        flight_plan = cache[flight_plan]
+
+    # return the flight route
     return route
+
+# added test code to file
+ticket_1 = Ticket("PIT", "ORD")
+ticket_2 = Ticket("XNA", "SAP")
+ticket_3 = Ticket("SFO", "BHM")
+ticket_4 = Ticket("FLG", "XNA")
+ticket_5 = Ticket("NONE", "LAX")
+ticket_6 = Ticket("LAX", "SFO")
+ticket_7 = Ticket("SAP", "SLC")
+ticket_8 = Ticket("ORD", "NONE")
+ticket_9 = Ticket("SLC", "PIT")
+ticket_10 = Ticket("BHM", "FLG")
+
+# Your function should output an array of strings with the entire route of your trip. For the above example, it should look like this: ["LAX", "SFO", "BHM", "FLG", "XNA", "CID", "SLC", "PIT", "ORD"]
+
+tickets = [ticket_1, ticket_2, ticket_3, ticket_4, ticket_5, ticket_6, ticket_7, ticket_8, ticket_9, ticket_10]
+
+print(f"Flight Plan:", reconstruct_trip(tickets, 10))
